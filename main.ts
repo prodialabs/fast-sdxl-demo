@@ -287,6 +287,7 @@ const imageData = await response.arrayBuffer();
         updateCode();
     });
 </script>
+Signup here for an api key: <a href="https://app.prodia.com/login">https://app.prodia.com/login</a>
 </body>
 `;
 });
