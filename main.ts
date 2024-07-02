@@ -27,6 +27,7 @@ router.get("/", (ctx) => {
         flex-direction: column;
         align-items: center;
         padding: 2rem;
+        color: white;
 
         gap: 4rem;
     }
@@ -90,6 +91,11 @@ router.get("/", (ctx) => {
 
     i {
         color: white;
+    }
+
+    a {
+        text-decoration: underline;
+        color: inherit !important;
     }
 
     pre {
@@ -287,7 +293,9 @@ const imageData = await response.arrayBuffer();
         updateCode();
     });
 </script>
-Signup here for an api key: <a href="https://app.prodia.com/login">https://app.prodia.com/login</a>
+
+
+    <p><a href="https://app.prodia.com/login">Sign up for Prodia!</a></p>
 </body>
 `;
 });
