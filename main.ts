@@ -3,6 +3,8 @@ import { Application, Router } from "https://deno.land/x/oak@v16.0.0/mod.ts";
 const router = new Router();
 
 router.get("/", (ctx) => {
+  console.log(`Referrer: ${ctx.request.referrer}`);
+
   ctx.response.body = `
 <!doctype html>
 <head>
