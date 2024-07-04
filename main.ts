@@ -317,7 +317,16 @@ router.post("/generate", async (ctx) => {
 
   const config = data;
 
-  delete config.domain;
+  console.log(data);
+
+  if (
+    data.prompt.length > 1000 ||
+    (data.negative_prompt && data.negative_prompt.length > 1000) ||
+    data.steps > 50
+  ) {
+    ctx.throw(400, "Dodgy Input");
+    return;
+  }
 
   const response = await fetch(`https://inference.prodia.com/v2/job`, {
     method: "POST",
@@ -334,8 +343,8 @@ router.post("/generate", async (ctx) => {
         guidance: data.guidance,
         seed: data.seed,
         steps: data.steps,
-        width: data.width,
-        height: data.height,
+        width: 1024,
+        height: 1024,
         refiner: data.refiner,
       },
     }),
