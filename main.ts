@@ -41,7 +41,6 @@ router.get("/", (ctx) => {
     }
 
     main, pre {
-        
         display: flex;
         flex-direction: column;
         gap: 2rem;
@@ -195,7 +194,7 @@ router.get("/", (ctx) => {
             <i id="info">Ready to generate</i>
         </section>
         <section>
-            <img src="image.jpg" />           
+            <img src="image.jpg" />
         </section>
     </main>
 
@@ -271,7 +270,7 @@ const imageData = await response.arrayBuffer();
             },
             body: JSON.stringify(data)
         });
-    
+
         $generate.innerHTML = generateText;
         $generate.disabled = false;
 
@@ -328,12 +327,14 @@ router.post("/generate", async (ctx) => {
     return;
   }
 
+
   const response = await fetch(`https://inference.prodia.com/v2/job`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
       "Accept": "image/jpeg",
       "Authorization": `Bearer ${Deno.env.get("API_TOKEN")}`,
+      "X-Forwarded-For": `${ctx.request.ips}`,
     },
     body: JSON.stringify({
       type: "v2.job.sdxl.txt2img",
@@ -364,6 +365,9 @@ router.post("/generate", async (ctx) => {
 });
 
 const app = new Application();
+
+// Enable proxy headers so they can be forwarded to the upstream API.
+app.proxy = true;
 
 // Use the router
 app.use(router.routes());
